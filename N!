@@ -1,0 +1,33 @@
+/*---利用数组进行N!高精度求解---*/
+
+#include <stdio.h>
+#define MAXN 10000
+
+int main()
+{
+  int n;  //整数N
+  int i, j;
+  int a[MAXN];
+  int temp, carry, digit;                   //临时数，进位数，总共的位数
+  
+  while ((scanf("%d",&n)!=EOF) && n>=0) {
+    a[0]=1,digit=1;		                      //当前位数为1，1和0的阶乘为1 
+    for (i=1; i<=n; i++) {                  //累乘到n
+      for (j=0,carry=0; j<digit; j++) {
+        temp = a[j]*i+carry;
+        a[j] = temp%10;
+        carry = temp/10;
+      }
+      
+      while (carry) {
+        a[digit++] = carry%10;
+        carry/=10;
+      }
+    }
+    for (i=digit-1; i>=0; i--){
+      printf("%d",a[i]);
+    }
+  }
+  
+  return 0;
+}
